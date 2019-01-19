@@ -45,31 +45,33 @@ var config = {
     // Store everything into a variable.
     var trainName = childSnapshot.val().name;
     var destination = childSnapshot.val().destination;
-    var frequency = childSnapshot.val().frequency;
-    var firstTrain = childSnapshot.val().firstTrain;
+    var frequency2 = childSnapshot.val().frequency;
+    var firstTrain2 = childSnapshot.val().firstTrain;
   
     // Train Info
     console.log(trainName);
     console.log(destination);
-    console.log(frequency);
-    console.log(firstTrain);
+    console.log(frequency2);
+    console.log(firstTrain2);
   
     // To calculate the next train and minutes until next
-    var totalMinutes = moment().diff(moment(firstTrain, "HH:mm"), "minutes");
+    var totalMinutes = moment().diff(moment(firstTrain2, "X"), "minutes");
     console.log(totalMinutes);
-    var totalTrains = totalMinutes / frequency;
+    var fixedMinutes = 1440 + totalMinutes;
+    console.log(fixedMinutes);
+    var totalTrains = fixedMinutes / frequency2;
     console.log(totalTrains);
-    var roundTrains = totalTrains.toFixed(0);
+    var roundTrains = Math.trunc(totalTrains);
     console.log(roundTrains);
-    var minutesAway = frequency - (totalMinutes - (roundTrains * frequency));
-    var nextTrain = moment().add(minutesAway, 'minutes').format("ddd, MMM Do, h:mm:ss a");
+    var minutesAway = frequency2 - (fixedMinutes - (roundTrains * frequency2));
+    var nextTrain = moment().add(minutesAway, 'minutes').format("ddd, MMM Do, h:mm a");
     
   
     // Create the new row
     var newRow = $("<tr>").append(
       $("<td>").text(trainName),
       $("<td>").text(destination),
-      $("<td>").text(frequency+" mins"),
+      $("<td>").text(frequency2+" mins"),
       $("<td>").text(nextTrain),
       $("<td>").text(minutesAway+" mins"),
     );
