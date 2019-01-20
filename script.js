@@ -37,10 +37,7 @@ $("#add-train-btn").on("click", function (event) {
     $("#frequency-input").val("");
     $("#first-input").val("");
 });
-database.ref().once("value", function (DataSnapshot) {
-    console.log(DataSnapshot.val());
-    console.log(DataSnapshot.val());
-});
+
 database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
     // database.ref().once('value', function(DataSnapshot){
