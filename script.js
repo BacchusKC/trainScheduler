@@ -37,9 +37,17 @@ $("#add-train-btn").on("click", function (event) {
     $("#frequency-input").val("");
     $("#first-input").val("");
 });
+database.ref().once("value", function (DataSnapshot) {
+    console.log(DataSnapshot.val());
+    console.log(DataSnapshot.val());
+});
 database.ref().on("child_added", function (childSnapshot) {
     console.log(childSnapshot.val());
-
+    // database.ref().once('value', function(DataSnapshot){
+    //     var test = DataSnapshot.val();
+    //     console.log(test);
+    // });
+        
     // Store everything into a variable.
     var trainName = childSnapshot.val().name;
     var destination = childSnapshot.val().destination;
@@ -72,11 +80,18 @@ database.ref().on("child_added", function (childSnapshot) {
         $("<td>").text(frequency2 + " mins"),
         $("<td>").text(nextTrain),
         $("<td>").text(minutesAway + " mins"),
-    );
-
+        $("<td>").html('<button id="delete">Delete</button>')
+    )
+   
     // Append the new row to the table
     $("#train-table > tbody").append(newRow);
 });
+
+$(document).on("click", "#delete", function() {
+    $(this).parent().parent().remove();
+    // database.ref(this).parent().remove();
+});
+
 var refresh = setInterval(refreshTime, 60000);
 // Create Firebase event for adding train to the database and a row in the html when a user adds an entry
 function refreshTime() {
@@ -116,6 +131,7 @@ function refreshTime() {
             $("<td>").text(frequency2 + " mins"),
             $("<td>").text(nextTrain),
             $("<td>").text(minutesAway + " mins"),
+            $("<td>").html('<button id="delete">Delete</button>')
         );
 
         // Append the new row to the table
